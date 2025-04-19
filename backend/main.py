@@ -36,6 +36,10 @@ async def upload(file: UploadFile = File(...)):
 
 @app.post("/guess")
 async def guess_codeword(codeword: str = Form(...)):
+    # Basic input validation to prevent injection attacks
+    if not codeword or not isinstance(codeword, str):
+        return {"result": "Invalid code word. Try again."}
+
     if codeword.strip().lower() == SECRET_CODEWORD.lower():
         return {
             "result": "Correct! Well done, you completed the puzzle-box! Save the completion_word as proof of completion.",
