@@ -17,7 +17,7 @@ file_scan_results: Dict[str, bool] = {}
 
 @app.post("/upload")
 async def upload(file: UploadFile = File(...)):
-    if not file.filename.endswith(".txt"):
+    if not file.filename.endswith(".txt"): # or file.content_type != "text/plain":
         return {"error": "Only .txt files are allowed."}
 
     content = await file.read()
