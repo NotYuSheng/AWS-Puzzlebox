@@ -1,4 +1,4 @@
-# AWS-PuzzleBox: FastAPI Capture The Flag (CTF)
+# AWS-PuzzleBox: FastAPI CTF
 
 Puzzle Box is a lightweight FastAPI app where users upload `.txt` files to search for a secret **code word** hidden inside. If the word is found, users can submit their guess and unlock a final **completion word** as proof of success.
 
