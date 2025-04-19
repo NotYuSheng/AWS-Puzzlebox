@@ -12,6 +12,10 @@ file_scan_results: Dict[str, bool] = {}
 # Completion word revealed only when the correct code word is guessed
 COMPLETION_WORD = os.getenv("COMPLETION_WORD")
 
+@app.get("/health")
+def health_check():
+    return {"status": "ok"}
+
 @app.post("/upload")
 async def upload(file: UploadFile = File(...)):
     if not file.filename.endswith(".txt"): # or file.content_type != "text/plain":
