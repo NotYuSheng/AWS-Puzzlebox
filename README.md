@@ -5,7 +5,7 @@ Puzzle Box is a lightweight FastAPI app where users upload `.txt` files to searc
 ## Live Demo
 
 > [!NOTE]  
-> The AWS instances has been disabled.
+> The AWS instances have been disabled.
 
 The app is publicly available for a limited time:
 
