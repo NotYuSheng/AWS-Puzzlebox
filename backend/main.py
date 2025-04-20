@@ -1,7 +1,9 @@
 from fastapi import FastAPI, UploadFile, File, Form
 from typing import Dict
+from botocore.exceptions import NoCredentialsError, BotoCoreError
 import uuid
 import os
+import boto3
 
 app = FastAPI()
 
