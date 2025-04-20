@@ -9,6 +9,9 @@ app = FastAPI()
 SECRET_CODEWORD = os.getenv("SECRET_CODEWORD")
 file_scan_results: Dict[str, bool] = {}
 
+S3_BUCKET = "puzzlebox-user-uploads"
+s3_client = boto3.client("s3")
+
 # Completion word revealed only when the correct code word is guessed
 COMPLETION_WORD = os.getenv("COMPLETION_WORD")
 
@@ -18,25 +21,29 @@ def health_check():
 
 @app.post("/upload")
 async def upload(file: UploadFile = File(...)):
-    if not file.filename.endswith(".txt"): # or file.content_type != "text/plain":
-        return {"error": "Only .txt files are allowed."}
-
-    content = await file.read()
-    text = content.decode("utf-8")
-    
-    found = SECRET_CODEWORD in text
     file_id = str(uuid.uuid4())
-    file_scan_results[file_id] = found
-    
-    if found:
-        message = f"Upload successful. 🎉 The code word was found in {file.filename}!"
-    else:
-        message = f"Upload successful. The code word was NOT found in {file.filename}. Try again!"
+    key = f"uploads/{file_id}_{file.filename}"
 
-    return {
-        "message": message,
-        "file_id": file_id
-    }
+    try:
+        contents = await file.read()
+
+        s3_client.put_object(
+            Bucket=S3_BUCKET,
+            Key=key,
+            Body=contents,
+            ContentType=file.content_type,
+        )
+
+        s3_url = f"https://{S3_BUCKET}.s3.amazonaws.com/{key}"
+
+        return {
+            "message": "File uploaded to S3",
+            "s3_key": key,
+            "s3_url": s3_url
+        }
+
+    except (BotoCoreError, NoCredentialsError) as e:
+        return {"error": f"Failed to upload to S3: {str(e)}"}
 
 @app.post("/guess")
 async def guess_codeword(codeword: str = Form(...)):
