@@ -18,7 +18,7 @@ This project serves as a learning journey for AWS, designed to explore how conta
 
 The goal is to progressively build an understanding of how modern cloud-native apps can be deployed, managed, and scaled within the AWS ecosystem — starting from simple Docker apps all the way to production-grade cloud architectures.
 
-## AWS Services Checklist
+## AWS Checklist
 
 - [x]	ECR
 - [x]	EC2
