@@ -26,6 +26,7 @@ The goal is to progressively build an understanding of how modern cloud-native a
 - [x] CloudWatch
 - [ ]	S3
 - [ ]	CodeBuild
+- [ ]	Lambda
 
 ## Docker Image on Amazon ECR Public Gallery
 
